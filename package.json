@@ -1,0 +1,23 @@
+{
+  "name": "ygo-boxdraft",
+  "version": "1.0.0",
+  "description": "For those wishing to do box drafts, the awesome [YGOProDeck](https://db.ygoprodeck.com/pack-open/) pack open tool enables easy access to an old-school style box draft. However, it can be hard to track these decks, especially as you proceed through the years. This script intends to take the YDK that is output from the pack opener at the end of a 24-pack draft into a spreadsheet to allow for easier continual drafts.",
+  "main": "boxdraft.js",
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HunterKing/YGO-BoxDraft.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HunterKing/YGO-BoxDraft/issues"
+  },
+  "homepage": "https://github.com/HunterKing/YGO-BoxDraft#readme"
+}
