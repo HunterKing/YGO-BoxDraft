@@ -4,8 +4,7 @@ import json
 from os import path
 
 url = "https://db.ygoprodeck.com/api/v7/cardinfo.php?id="
-path = "./data/"
-req = requests.get(url)
+folder = "./data/"
 
 #if(not(path.exists("data.json"))):
 #    print("json doesn't exist, fetching data...\n")
@@ -16,17 +15,26 @@ req = requests.get(url)
 def search_id(id):
     print("Searching for item with ID: " + id)
     filename = id + ".json"
-    fullpath = path + filename
+    fullpath = folder + filename
     print("Full path is: " + fullpath)
     fullurl = url + id
     print("Full url is: " + fullurl)
-    #f = open(fullpath, "x")
-    #f.write(req.text)
-    #f.close()
-    print(req.text)
+    req = requests.get(fullurl)
+    if(not(path.exists(fullpath))):
+        print("Fetching new card...")
+        f = open(fullpath, "x")
+        f.write(req.text)
+        f.close()
+        print(req.text)
+    else:
+        print("File exists!")
+        f = open(fullpath)
+        info = json.load(f)
+        for i in info["data"]:
+            print(i)
 
 id = -1
-while(id != 0):
+while(id != "0"):
     id = input("Enter an ID: ")
-    if(id != 0):
+    if(id != "0"):
         search_id(id)
