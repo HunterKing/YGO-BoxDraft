@@ -14,6 +14,7 @@ folder = "./data/"
 
 def search_id(id):
     print("Searching for item with ID: " + id)
+    id = id.lstrip("0")
     filename = id + ".json"
     fullpath = folder + filename
     print("Full path is: " + fullpath)
@@ -30,8 +31,8 @@ def search_id(id):
         print("File exists!")
         f = open(fullpath)
         info = json.load(f)
-        for i in info["data"]:
-            print(i)
+        print(info)
+        #for i in info["data"]:
 
 id = -1
 while(id != "0"):
