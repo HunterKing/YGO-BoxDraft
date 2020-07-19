@@ -6,7 +6,9 @@ import sys
 import time
 from os import path
 
+#URL that is used as base for API calls
 url = "https://db.ygoprodeck.com/api/v7/cardinfo.php?id="
+#Folders that are used as a data cache and storage for original files, respectively.
 folder = "./data/"
 folder2 = "./sets/"
 
@@ -23,16 +25,16 @@ def search_id(id):
     id = id.lstrip("0")
     filename = id + ".json"
     fullpath = folder + filename
-    print("Full path is: " + fullpath)
     fullurl = url + id
-    print("Full url is: " + fullurl)
-    req = requests.get(fullurl)
+    print("Full path is: " + fullpath)
     if(not(path.exists(fullpath))):
         print("Fetching new card...")
+        req = requests.get(fullurl)
         f = open(fullpath, "x")
         f.write(req.text)
         f.close()
         print(req.text)
+        time.sleep(0.05)
     else:
         print("File exists!")
         f = open(fullpath)
@@ -40,13 +42,25 @@ def search_id(id):
         print(info)
         f.close()
 
-def parse_set():
+def parse_sets():
+    idset = []
+    setlist = []
     for file in glob.glob(folder2 + "*.ydk"):
-        print(file)
+        setlist.append(file)
+    print(setlist)
+    for file in setlist:
+        f = open(file)
+        while True:
+            line = f.readline()
+            line = line.rstrip(" \n")
+            if not line:
+                break
+            if(line[0] >= "0" and line[0] <= "9"):
+                idset.append(line)
+        f.close()
+    return idset
 
-id = -1
-while(id != "0"):
-    parse_set()
-    id = input("Enter an ID: ")
-    if(id != "0"):
-        search_id(id)
+
+all_ids = parse_sets()
+for id in all_ids:
+    search_id(id)
