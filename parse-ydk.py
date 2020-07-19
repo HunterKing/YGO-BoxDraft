@@ -16,13 +16,10 @@ while True:
     line = line.rstrip(" \n")
     if not line:
         break
-    lines.append(line)
-    #if(line[0] > "0" or line[0] < "9"):
-    #    print("Not a card password")
-    #else:
-    #    print(line)
+    if(line[0] >= "0" and line[0] <= "9"):
+        lines.append(line)
+
 print("Done.")
-time.sleep(1.1)
-print("1.1s later...")
+#time.sleep(1.1)
 print(lines)
 f.close()

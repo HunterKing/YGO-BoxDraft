@@ -1,16 +1,22 @@
 import requests
 import os.path
 import json
+import glob
+import sys
+import time
 from os import path
 
 url = "https://db.ygoprodeck.com/api/v7/cardinfo.php?id="
 folder = "./data/"
+folder2 = "./sets/"
 
-#if(not(path.exists("data.json"))):
-#    print("json doesn't exist, fetching data...\n")
-#    f = open("data.json", "w")
-#    f.write(req.text)
-#    f.close()
+if(not(path.exists(folder))):
+    print("Attempting to make data storage directory.")
+    os.mkdir(folder)
+
+if(not(path.exists(folder2))):
+    print("Attempting to make set directory.")
+    os.mkdir(folder2)
 
 def search_id(id):
     print("Searching for item with ID: " + id)
@@ -32,10 +38,15 @@ def search_id(id):
         f = open(fullpath)
         info = json.load(f)
         print(info)
-        #for i in info["data"]:
+        f.close()
+
+def parse_set():
+    for file in glob.glob(folder2 + "*.ydk"):
+        print(file)
 
 id = -1
 while(id != "0"):
+    parse_set()
     id = input("Enter an ID: ")
     if(id != "0"):
         search_id(id)
