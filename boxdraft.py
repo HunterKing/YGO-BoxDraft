@@ -21,7 +21,8 @@ if(not(path.exists(folder2))):
     os.mkdir(folder2)
 
 def search_id(id):
-    print("Searching for item with ID: " + id)
+    print("Searching for item with ID: ")
+    print(id)
     id = id.lstrip("0")
     filename = id + ".json"
     fullpath = folder + filename
@@ -37,6 +38,7 @@ def search_id(id):
         time.sleep(0.05)
     else:
         print("File exists!")
+        #TODO: Find a better data structure to use for this than a plain list.
         f = open(fullpath)
         info = json.load(f)
         print(info)
@@ -45,6 +47,7 @@ def search_id(id):
 def parse_sets():
     idset = []
     setlist = []
+
     for file in glob.glob(folder2 + "*.ydk"):
         setlist.append(file)
     print(setlist)
@@ -56,11 +59,23 @@ def parse_sets():
             if not line:
                 break
             if(line[0] >= "0" and line[0] <= "9"):
-                idset.append(line)
+                exists = False
+                #TODO: Find a better data structure to use for this than a plain list.
+                for i in idset:
+                    if line in i:
+                        newitem = (line, i[1] + 1)
+                        idset.remove(i)
+                        idset.append(newitem)               
+                        exists = True
+                        break
+                if(not exists):
+                    item = (line, 1)
+                    idset.append(item)
         f.close()
     return idset
 
 
 all_ids = parse_sets()
 for id in all_ids:
-    search_id(id)
+    print(id)
+    #search_id(id[0])
